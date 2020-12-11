@@ -1,9 +1,12 @@
 package br.com.everis.personapi.controller;
 
+import br.com.everis.personapi.dto.PersonDTO;
 import br.com.everis.personapi.service.PersonService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class PersonController {
@@ -15,8 +18,8 @@ public class PersonController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Person>> listAll() {
-        return personService.listAll();
+    public ResponseEntity<List<PersonDTO>> listAll() {
+        return null;
     }
 
 }

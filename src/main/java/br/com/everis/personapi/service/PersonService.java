@@ -1,6 +1,8 @@
 package br.com.everis.personapi.service;
 
+import br.com.everis.personapi.dto.PersonDTO;
 import br.com.everis.personapi.entity.Person;
+import br.com.everis.personapi.mapper.PersonMapper;
 import br.com.everis.personapi.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.Optional;
 public class PersonService {
 
     private PersonRepository repository;
+
+    private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
     public PersonService(PersonRepository repository){
         this.repository = repository;
@@ -24,8 +28,10 @@ public class PersonService {
         return repository.findById(personId);
     }
 
-    public Person savePerson(Person person){
-        return repository.save(person);
+    public Person savePerson(PersonDTO personDTO){
+
+        return repository.save(PersonMapper.INSTANCE.toPerson(personDTO));
+
     }
 
     public void deletePerson(Long personId){
