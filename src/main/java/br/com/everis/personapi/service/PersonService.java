@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -17,24 +18,30 @@ public class PersonService {
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
     public PersonService(PersonRepository repository){
+
         this.repository = repository;
     }
 
-    public List<Person> listAll(){
-        return repository.findAll();
+    public List<PersonDTO> listAll(){
+        List<Person> listAll= repository.findAll();
+        return listAll.stream().map(personMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     public Optional<Person> findById(Long personId){
+
         return repository.findById(personId);
     }
 
-    public Person savePerson(PersonDTO personDTO){
-
-        return repository.save(PersonMapper.INSTANCE.toPerson(personDTO));
+    public PersonDTO savePerson(PersonDTO personDTO){
+        Person personToSave = personMapper.toModel(personDTO);
+        repository.save(personToSave);
+        return personMapper.toDTO(personToSave);
 
     }
 
     public void deletePerson(Long personId){
+
         repository.deleteById(personId);
     }
 }

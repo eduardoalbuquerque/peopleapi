@@ -23,6 +23,6 @@ public class Person {
 
     private String birthDate;
 
-    @OneToMany
+    @OneToMany(mappedBy = "person")
     private List<Phone> phoneList;
 }
